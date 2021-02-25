@@ -1,7 +1,11 @@
 # Integer-Hyper-prior-Network
 Reproduction of "INTEGER NETWORKS FOR DATA COMPRESSION WITH LATENT-VARIABLE MODELS".
 
-In the file [int_hyper_network.py](./int_hyper_network.py), a hyper synthesis transform with integer parameters is provided. The provided network is expected to work in a deterministic manner, that the output for the fixed input will remain unchanged no matter how the platform varies.
+> "Integer networks for data compression with latent-variable models" (ICLR 2019)  
+> J. Ballé, N. Johnston, and D. Minnen  
+> https://openreview.net/pdf?id=S1zz2i0cY7
+
+In the file [int_hyper_network.py](./int_hyper_network.py), a hyper synthesis transform with integer parameters is provided. This network is expected to work in a deterministic manner, that the output for the fixed input will remain unchanged no matter how the platform varies.
 
 The details of this file are as follows:
 
