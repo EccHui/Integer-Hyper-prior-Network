@@ -1,0 +1,2 @@
+# Integer-Hyper-prior-Network
+Reproduction of "INTEGER NETWORKS FOR DATA COMPRESSION WITH LATENT-VARIABLE MODELS".
