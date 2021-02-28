@@ -5,11 +5,11 @@ Reproduction of "INTEGER NETWORKS FOR DATA COMPRESSION WITH LATENT-VARIABLE MODE
 > J. Ballé, N. Johnston, and D. Minnen  
 > https://openreview.net/pdf?id=S1zz2i0cY7
 
-In the file [int_hyper_network.py](./int_hyper_network.py), a hyper synthesis transform with integer parameters is provided. This network is expected to work in a deterministic manner, that the output for the fixed input will remain unchanged no matter how the platform varies.
+In the file [compare.py](./compare.py), a hyper synthesis transform with integer parameters is provided. This network is expected to work in a deterministic manner, that the output for the fixed input will remain unchanged no matter how the platform varies.
 
 The details of this file are as follows:
 
-* The function `hyper_synthesis_transform()` is the integer network, while `hyper2()` is an instance of the float network implemented with standard tfc library. The structure of these two networks should be the same;
+* The function `float_network()` is the integer network, while `integer_network()` is an instance of the float network implemented with standard tfc library. The structure of these two networks should be the same;
 * Both networks are evaluated on cpu and gpu, and here is a typical result: 
   ```
   Integer Network: True . Error:0.0 
