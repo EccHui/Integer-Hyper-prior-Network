@@ -91,7 +91,7 @@ class IntegerConv2DTranspose(tf.keras.layers.Layer):
       s = tf.cast( 2**K, dtype=tf.float32)
       c = tf.round( s * c_scale )
       def grad(dy):
-        idx = tf.cast(tf.logical_or(tf.where(c>=c_thd), tf.where(dy<0)), dtype=tf.float32)
+        idx = tf.cast(tf.logical_or(c>=c_thd, dy<0), dtype=tf.float32)
         return dy * idx * s,  tf.zeros_like(K)
       return c, grad
 
@@ -99,8 +99,8 @@ class IntegerConv2DTranspose(tf.keras.layers.Layer):
     bias = bias_quantizer(self.bias, self.K)
     c = c_quantizer(self.c, self.K)
 
-    y = tf.nn.conv2d_transpose(x, kernel, self.conv_shape, strides=self.strides, padding="SAME")
-    x = y + tf.broadcast_to(bias, self.conv_shape)
+    x = tf.nn.conv2d_transpose(x, kernel, self.conv_shape, strides=self.strides, padding="SAME")
+    x = x + tf.broadcast_to(bias, self.conv_shape)
     x = tf.divide(x, tf.broadcast_to(c, self.conv_shape))
     
     x = qrelu(x, 2**self.L-1)
