@@ -68,12 +68,12 @@ class IntegerConv2DTranspose(tf.keras.layers.Layer):
     c = c_quantizer(self.c, self.K)
 
     x_shape = tf.shape(x)
-    deconv_shape = self.conv_shape = [x_shape[0], self.strides[0]*x_shape[1], 
+    deconv_shape = [x_shape[0], self.strides[0]*x_shape[1], 
       self.strides[1]*x_shape[2], self.num_filters]
     
     x = tf.nn.conv2d_transpose(x, kernel, deconv_shape, strides=self.strides, padding="SAME")
-    x = x + tf.broadcast_to(bias, self.conv_shape)
-    x = tf.divide(x, tf.broadcast_to(c, self.conv_shape))
+    x = x + tf.broadcast_to(bias, deconv_shape)
+    x = tf.divide(x, tf.broadcast_to(c, deconv_shape))
     
     x = qrelu(x, 2**self.L-1)
     return x
