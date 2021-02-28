@@ -73,7 +73,7 @@ def c_quantizer(c, K):
   s = tf.cast( 2**K, dtype=tf.float32)
   c = tf.round( s * c_scale )
   def grad(dy):
-    idx = tf.cast(tf.logical_or(tf.where(c>=c_thd), tf.where(dy<0)), dtype=tf.float32)
+    idx = tf.cast(tf.logical_or(c>=c_thd, dy<0), dtype=tf.float32)
     return dy * idx * s,  tf.zeros_like(K)
   return c, grad
 
