@@ -21,8 +21,6 @@ class IntegerConv2DTranspose(tf.keras.layers.Layer):
     self.c = self.add_weight(name='c', 
       shape=(1, 1, 1, self.num_filters), initializer='uniform', 
       trainable=True)
-    self.conv_shape = [input_shape[0], self.strides[0]*input_shape[1], 
-      self.strides[1]*input_shape[2], self.num_filters]
     super(IntegerConv2DTranspose, self).build(input_shape)
 
   def call(self, x):
@@ -69,7 +67,11 @@ class IntegerConv2DTranspose(tf.keras.layers.Layer):
     bias = bias_quantizer(self.bias, self.K)
     c = c_quantizer(self.c, self.K)
 
-    x = tf.nn.conv2d_transpose(x, kernel, self.conv_shape, strides=self.strides, padding="SAME")
+    x_shape = tf.shape(x)
+    deconv_shape = self.conv_shape = [x_shape[0], self.strides[0]*x_shape[1], 
+      self.strides[1]*x_shape[2], self.num_filters]
+    
+    x = tf.nn.conv2d_transpose(x, kernel, deconv_shape, strides=self.strides, padding="SAME")
     x = x + tf.broadcast_to(bias, self.conv_shape)
     x = tf.divide(x, tf.broadcast_to(c, self.conv_shape))
     
